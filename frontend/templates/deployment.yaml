@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}                # → frontend
+  namespace: {{ .Values.namespace }}         # → erp-production
+  labels:
+    app: {{ .Values.appName }}               # → label pour le Service
+spec:
+  replicas: {{ .Values.replicaCount }}       # → 2 haute dispo ✅
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}             # → sélectionne les pods frontend
+  strategy:
+    type: RollingUpdate                      # → mise à jour sans downtime ✅
+    rollingUpdate:
+      maxSurge: 1                            # → 1 pod supplémentaire pendant update
+      maxUnavailable: 0                      # → aucun pod indisponible pendant update
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}           # → label du pod
+    spec:
+      containers:
+        - name: {{ .Values.appName }}        # → nom du container
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}  # → hanenall/frontend:abc1234
+          imagePullPolicy: {{ .Values.image.pullPolicy }}               # → IfNotPresent car tag unique
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}           # → 80 nginx écoute
+          resources:
+            requests:
+              memory: {{ .Values.resources.requests.memory }}  # → 128Mi minimum garanti
+              cpu: {{ .Values.resources.requests.cpu }}        # → 50m minimum garanti
+            limits:
+              memory: {{ .Values.resources.limits.memory }}    # → 256Mi max autorisé
+              cpu: {{ .Values.resources.limits.cpu }}          # → 200m max autorisé
+          # readinessProbe → vérifie si pod prêt à recevoir du trafic ✅
+          # nginx répond sur / avec index.html → status 200 ✅
+          readinessProbe:
+            httpGet:
+              path: /                                          # → / car nginx pas de /health
+              port: {{ .Values.service.targetPort }}           # → 80
+            initialDelaySeconds: 5                             # → nginx démarre en 1-2s
+            periodSeconds: 10                                  # → vérifier toutes les 10s
+            failureThreshold: 3                                # → 3 échecs → pod NotReady
+          # livenessProbe → vérifie si pod encore vivant ✅
+          # si échec → Kubernetes redémarre le pod ✅
+          livenessProbe:
+            httpGet:
+              path: /                                          # → / car nginx pas de /health
+              port: {{ .Values.service.targetPort }}           # → 80
+            initialDelaySeconds: 10                            # → attendre 10s avant de vérifier
+            periodSeconds: 30                                  # → vérifier toutes les 30s
+            failureThreshold: 3                                # → 3 échecs → pod redémarré

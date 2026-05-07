@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ingress
+  # namespace ArgoCD → Ingress doit être dans le même
+  # namespace que le service qu'il expose ✅
+  namespace: {{ .Values.devops.argocd.namespace }}    # → argocd
+spec:
+  ingressClassName: {{ .Values.ingress.className }}   # → nginx
+  rules:
+    - host: {{ .Values.devops.argocd.host }}          # → argocd.itanis.tn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.devops.argocd.name }}      # → argocd-server
+                port:
+                  number: {{ .Values.devops.argocd.port }}  # → 80

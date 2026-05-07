@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.appName }}-config
+  namespace: {{ .Values.namespace }}
+data:
+  ASPNETCORE_ENVIRONMENT: {{ .Values.env.aspnetcore_environment }}
+  ASPNETCORE_URLS: "http://+:8080"
+  DB_HOST: "sqlserver-service.{{ .Values.namespace }}.svc.cluster.local"
+  DB_PORT: {{ .Values.db.port | quote }}
+  DB_NAME: {{ .Values.db.name }}
+  DB_USER: {{ .Values.db.user }}
+  RABBITMQ_HOST: "rabbitmq.{{ .Values.namespace }}.svc.cluster.local"
+  RABBITMQ_PORT: {{ .Values.rabbitmq.port | quote }}
+  RABBITMQ_USER: {{ .Values.rabbitmq.user }}
+  RH_SERVICE_URL: "http://{{ .Values.interServices.rh }}.{{ .Values.namespace }}.svc.cluster.local"
+  PROJET_SERVICE_URL: "http://{{ .Values.interServices.projet }}.{{ .Values.namespace }}.svc.cluster.local"
+  HELPDESK_SERVICE_URL: "http://{{ .Values.interServices.helpdesk }}.{{ .Values.namespace }}.svc.cluster.local"
+  TIMESHEET_SERVICE_URL: "http://{{ .Values.interServices.timesheet }}.{{ .Values.namespace }}.svc.cluster.local"
+  BI_SERVICE_URL: "http://{{ .Values.interServices.bi }}.{{ .Values.namespace }}.svc.cluster.local"

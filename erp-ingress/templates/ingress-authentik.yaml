@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: authentik-ingress
+  # namespace authentik → défini dans .Values.authentik.namespace ✅
+  namespace: {{ .Values.authentik.namespace }}        # → authentik
+spec:
+  ingressClassName: {{ .Values.ingress.className }}   # → nginx
+  rules:
+    # authentik.itanis.tn → page login + administration Authentik
+    - host: {{ .Values.devops.authentik.host }}       # → authentik.itanis.tn
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                # serviceName défini dans .Values.authentik ✅
+                # pas de duplication dans values.yaml
+                name: {{ .Values.devops.authentik.name }}   # → authentik-server
+                port:
+                  number: {{ .Values.devops.authentik.port }}      # → 80

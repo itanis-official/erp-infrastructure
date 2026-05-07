@@ -1,0 +1,21 @@
+appName: "frontend"
+namespace: "erp-production"
+
+image:
+  repository: hanenall/frontend     
+  tag: ""   # sera remplacé par GitHub Actions
+  pullPolicy: IfNotPresent     # pas Always → tag unique 
+
+replicaCount: 2
+
+service:
+  port: 80
+  targetPort: 80             # nginx écoute sur 80 ✅
+
+resources:
+  requests:
+    memory: "128Mi"          # frontend plus léger que .NET ✅
+    cpu: "50m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
