@@ -4,8 +4,14 @@ metadata:
   name: authentik-ingress
   # namespace authentik → défini dans .Values.authentik.namespace ✅
   namespace: {{ .Values.authentik.namespace }}        # → authentik
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.issuer }}   # → letsencrypt-prod
 spec:
-  ingressClassName: {{ .Values.ingress.className }}   # → nginx
+  ingressClassName: {{ .Values.ingress.className }}   # → 
+  tls:
+    - hosts:
+        - {{ .Values.devops.authentik.host }}         # → authentik.itanis.tn
+      secretName: authentik-itanis-tls                # cert-manager crée ce secret
   rules:
     # authentik.itanis.tn → page login + administration Authentik
     - host: {{ .Values.devops.authentik.host }}       # → authentik.itanis.tn

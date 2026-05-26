@@ -8,6 +8,7 @@ metadata:
     # $2 = 2ème groupe de capture du regex
     # exemple : /api/crm/clients → pod reçoit /clients
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.issuer }}
 
     # auth-url : Nginx interroge Authentik avant chaque requête
     # si non connecté → Authentik retourne 401 → redirection login
@@ -15,7 +16,7 @@ metadata:
 
     # auth-signin : URL page login Authentik
     # $escaped_request_uri → redirige vers page demandée après login
-    nginx.ingress.kubernetes.io/auth-signin: "http://{{ .Values.authentik.publicHost }}/outpost.goauthentik.io/start?rd=$escaped_request_uri"
+    nginx.ingress.kubernetes.io/auth-signin: "https://{{ .Values.authentik.publicHost }}/outpost.goauthentik.io/start?rd=$escaped_request_uri"
     # headers envoyés au frontend après authentification réussie
     # X-authentik-username → nom utilisateur
     # X-authentik-groups   → groupes (ceo, rh_manager...)
@@ -27,6 +28,10 @@ metadata:
 spec:
   # remplace l'annotation dépréciée kubernetes.io/ingress.class ✅
   ingressClassName: {{ .Values.ingress.className }}
+  tls:                                                                  # ← AJOUT
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: erp-itanis-tls
   rules:
     - host: {{ .Values.ingress.host }}    # → erp.itanis.tn
       http:

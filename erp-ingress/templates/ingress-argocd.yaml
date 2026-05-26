@@ -5,8 +5,15 @@ metadata:
   # namespace ArgoCD → Ingress doit être dans le même
   # namespace que le service qu'il expose ✅
   namespace: {{ .Values.devops.argocd.namespace }}    # → argocd
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.issuer }}   # → letsencrypt-prod
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP" #pour que ingress sait qu'il doit parler avec argocd-server en HTTP
 spec:
   ingressClassName: {{ .Values.ingress.className }}   # → nginx
+  tls:
+    - hosts:
+        - {{ .Values.devops.argocd.host }}           # → argocd.itanis.tn
+      secretName: argocd-itanis-tls
   rules:
     - host: {{ .Values.devops.argocd.host }}          # → argocd.itanis.tn
       http:

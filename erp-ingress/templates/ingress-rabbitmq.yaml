@@ -5,8 +5,14 @@ metadata:
   # RabbitMQ est dans erp-production
   # → utilise .Values.namespace ✅ pas de duplication
   namespace: {{ .Values.namespace }}                  # → erp-production
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.issuer }}   # → letsencrypt-prod
 spec:
   ingressClassName: {{ .Values.ingress.className }}   # → nginx
+  tls:
+    - hosts:
+        - {{ .Values.devops.rabbitmq.host }}          # → rabbitmq.itanis.tn
+      secretName: rabbitmq-itanis-tls                 # cert-manager le crée
   rules:
     # rabbitmq.itanis.tn → interface admin RabbitMQ
     - host: {{ .Values.devops.rabbitmq.host }}        # → rabbitmq.itanis.tn

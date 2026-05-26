@@ -5,8 +5,17 @@ metadata:
   # Grafana et Kibana sont dans le même namespace monitoring
   # → un seul fichier ingress pour les deux ✅
   namespace: {{ .Values.devops.grafana.namespace }}   # → monitoring
+  annotations:
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.issuer }}   # → letsencrypt-prod
 spec:
   ingressClassName: {{ .Values.ingress.className }}   # → nginx
+  tls:
+    - hosts:
+        - {{ .Values.devops.grafana.host }}           # → grafana.itanis.tn
+      secretName: grafana-itanis-tls
+    - hosts:
+        - {{ .Values.devops.kibana.host }}            # → kibana.itanis.tn
+      secretName: kibana-itanis-tls
   rules:
     # grafana.itanis.tn → service Grafana
     - host: {{ .Values.devops.grafana.host }}         # → grafana.itanis.tn

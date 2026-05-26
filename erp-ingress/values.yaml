@@ -3,6 +3,8 @@ namespace: "erp-production"
 ingress:
   host: "erp.itanis.tn"
   className: "nginx"
+  tls:
+    issuer: letsencrypt-prod
 
 authentik:
   namespace: "authentik"

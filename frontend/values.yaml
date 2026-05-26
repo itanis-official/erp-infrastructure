@@ -3,7 +3,7 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/frontend     
-  tag: ""   # sera remplacé par GitHub Actions
+  tag: "103ac1151dc81fc3afa5ce9de0e42aaf4a5c8083"
   pullPolicy: IfNotPresent     # pas Always → tag unique 
 
 replicaCount: 2
