@@ -1,0 +1,42 @@
+appName: "gestion-projet"
+namespace: "erp-production"
+
+image:
+  repository: hanenall/gestion-projet
+  tag: ""   # sera renseigné après le build/push
+  pullPolicy: IfNotPresent
+
+replicaCount: 2   
+
+service:
+  port: 80
+  targetPort: 80
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+env:
+  aspnetcore_environment: "Production"
+
+db:
+  serviceName: "sqlserver-service"
+  serviceNamespace: "erp-production"
+  port: "1433"
+  name: "db_projet"
+  user: "projet_user"
+  # password injecté via --set par Ansible
+
+rabbitmq:
+  serviceName: "rabbitmq-service"
+  serviceNamespace: "erp-production"
+  port: "5672"
+  user: "admin"
+  # password injecté via --set par Ansible
+
+groq:
+  # apiKey injecté via --set par Ansible

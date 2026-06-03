@@ -2,15 +2,15 @@ appName: "crm"
 namespace: "erp-production"
 
 image:
-  repository: nginx      # placeholder ✅
-  tag: latest
-  pullPolicy: Always
- 
-replicaCount: 1          # 1 pour tester ✅
+  repository: hanenall/crm
+  tag: "<SHA-à-mettre-après-push>"
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
 
 service:
   port: 80
-  targetPort: 80         # nginx écoute sur 80 ✅
+  targetPort: 80
 
 resources:
   requests:
@@ -22,21 +22,9 @@ resources:
 
 env:
   aspnetcore_environment: "Production"
-  # indique à .NET dans quel mode tourner
-  # Production → optimisations activées
-  #            → pages d'erreur détaillées désactivées
-  #            → logs minimalistes
-  # utilisé dans configmap.yaml →
-  # ASPNETCORE_ENVIRONMENT: Production
 
-db:
-  name: "db_crm"
-  user: "crm_user"
-  port: "1433"
-
-rabbitmq:
-  port: "5672"
-  user: "admin"
+authentik:
+  apiUrl: "http://authentik-server.authentik.svc.cluster.local"
 
 interServices:
   rh:        "rh-service"

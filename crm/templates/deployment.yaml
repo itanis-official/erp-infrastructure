@@ -38,5 +38,16 @@ spec:
             limits:
               memory: {{ .Values.resources.limits.memory }}
               cpu: {{ .Values.resources.limits.cpu }}
-          # probes supprimées pour le test ✅
-          # à remettre quand vraie image .NET disponible
+          # probes : à ajouter quand les devs auront fait /health
+          # readinessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: {{ .Values.service.targetPort }}
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 10
+          # livenessProbe:
+          #   httpGet:
+          #     path: /health
+          #     port: {{ .Values.service.targetPort }}
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 30
