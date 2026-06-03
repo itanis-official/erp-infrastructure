@@ -3,7 +3,7 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/crm
-  tag: "<SHA-à-mettre-après-push>"
+  tag: "356ce4164b68fe53aadca4b3811c37a07f96f2db"
   pullPolicy: IfNotPresent
 
 replicaCount: 2
