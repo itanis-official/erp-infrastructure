@@ -2,7 +2,7 @@ appName: "gestion-projet"
 namespace: "erp-production"
 
 image:
-  repository: hanenall/gestion-projet
+  repository: hanenall/gestionprojet
   tag: "1ffd3db4d1baf82aff89d55ce42b594d6beb318f"    
   pullPolicy: IfNotPresent
 
