@@ -3,7 +3,7 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/gestionprojet
-  tag: "1ffd3db4d1baf82aff89d55ce42b594d6beb318f"    
+  tag: "4e740ab274175a439d905b91f1948c28c7536577"
   pullPolicy: IfNotPresent
 
 replicaCount: 2
