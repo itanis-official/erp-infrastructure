@@ -3,10 +3,10 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/gestion-projet
-  tag: ""   # sera renseigné après le build/push
+  tag: "1ffd3db4d1baf82aff89d55ce42b594d6beb318f"    
   pullPolicy: IfNotPresent
 
-replicaCount: 2   
+replicaCount: 1
 
 service:
   port: 80
@@ -23,20 +23,12 @@ resources:
 env:
   aspnetcore_environment: "Production"
 
-db:
-  serviceName: "sqlserver-service"
-  serviceNamespace: "erp-production"
-  port: "1433"
-  name: "db_projet"
-  user: "projet_user"
-  # password injecté via --set par Ansible
+authentik:
+  apiUrl: "http://authentik-server.authentik.svc.cluster.local"
 
-rabbitmq:
-  serviceName: "rabbitmq-service"
-  serviceNamespace: "erp-production"
-  port: "5672"
-  user: "admin"
-  # password injecté via --set par Ansible
-
-groq:
-  # apiKey injecté via --set par Ansible
+interServices:
+  crm:       "crm-service"
+  rh:        "rh-service"
+  helpdesk:  "helpdesk-service"
+  timesheet: "timesheet-service"
+  bi:        "bi-service"

@@ -1,6 +1,6 @@
 apiVersion: v2
 name: gestion-projet
-description: Module Gestion de Projet ERP
+description: Module Gestion-Projet ERP
 type: application
 version: 1.0.0
 appVersion: "1.0.0"

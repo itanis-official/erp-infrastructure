@@ -6,3 +6,11 @@ metadata:
 data:
   ASPNETCORE_ENVIRONMENT: {{ .Values.env.aspnetcore_environment }}
   ASPNETCORE_URLS: "http://+:{{ .Values.service.targetPort }}"
+
+  AUTHENTIK_API_URL: {{ .Values.authentik.apiUrl }}
+
+  CRM_SERVICE_URL:       "http://{{ .Values.interServices.crm }}.{{ .Values.namespace }}.svc.cluster.local"
+  RH_SERVICE_URL:        "http://{{ .Values.interServices.rh }}.{{ .Values.namespace }}.svc.cluster.local"
+  HELPDESK_SERVICE_URL:  "http://{{ .Values.interServices.helpdesk }}.{{ .Values.namespace }}.svc.cluster.local"
+  TIMESHEET_SERVICE_URL: "http://{{ .Values.interServices.timesheet }}.{{ .Values.namespace }}.svc.cluster.local"
+  BI_SERVICE_URL:        "http://{{ .Values.interServices.bi }}.{{ .Values.namespace }}.svc.cluster.local"
