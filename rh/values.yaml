@@ -43,3 +43,6 @@ interServices:
   helpdesk:  "helpdesk-service"
   timesheet: "timesheet-service"
   bi:        "bi-service"
+
+serviceAccount:
+  create: true

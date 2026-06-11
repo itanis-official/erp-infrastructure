@@ -19,7 +19,7 @@ resources:
   limits:
     memory: "512Mi"
     cpu: "500m"
-    
+
 autoscaling:
   enabled: true
   minReplicas: 2
@@ -39,3 +39,6 @@ interServices:
   helpdesk:  "helpdesk-service"
   timesheet: "timesheet-service"
   bi:        "bi-service"
+
+serviceAccount:
+  create: true
