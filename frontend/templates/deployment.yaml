@@ -20,6 +20,8 @@ spec:
       labels:
         app: {{ .Values.appName }}           # → label du pod
     spec:
+      serviceAccountName: {{ .Values.appName }}-sa
+      automountServiceAccountToken: false
       containers:
         - name: {{ .Values.appName }}        # → nom du container
           image: {{ .Values.image.repository }}:{{ .Values.image.tag }}  # → hanenall/frontend:abc1234
