@@ -3,7 +3,7 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/timesheet
-  tag: "f8e21f6a697a88182fe991f71d822f9d798a7803"
+  tag: "cfd4b640940bdba7e8102444a004894391ab12c0"
   pullPolicy: IfNotPresent
 
 replicaCount: 2
