@@ -1,0 +1,44 @@
+appName: "helpdesk"
+namespace: "erp-production"
+
+image:
+  repository: hanenall/helpdesk
+  tag: "0c71f6162ec5e0885b4f43795418482bebdc8abd"
+  pullPolicy: IfNotPresent
+
+replicaCount: 2
+
+service:
+  port: 80
+  targetPort: 80
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+env:
+  aspnetcore_environment: "Production"
+
+authentik:
+  apiUrl: "http://authentik-server.authentik.svc.cluster.local"
+
+interServices:
+  rh:        "rh-service"
+  projet:    "gestion-projet-service"
+  timesheet: "timesheet-service"
+  crm:       "crm-service"
+  bi:        "bi-service"
+
+serviceAccount:
+  create: true
