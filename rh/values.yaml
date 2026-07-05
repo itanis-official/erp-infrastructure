@@ -3,7 +3,7 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/rh
-  tag: "de057464f2ac5986cdd1c6cde621827da8c9aa77"
+  tag: "160b1650b4329ce05a80ae0e25ec440be47ae170"
   pullPolicy: IfNotPresent
 
 replicaCount: 2
