@@ -3,7 +3,7 @@ namespace: "erp-production"
 
 image:
   repository: hanenall/frontend     
-  tag: "65d9bad4b048b13db4c69e8607aad05f10f68a90"
+  tag: "385c49919a66b23ff9ef56646ed58e17c1ca9ae1"
   pullPolicy: IfNotPresent     # pas Always → tag unique 
 
 replicaCount: 2
